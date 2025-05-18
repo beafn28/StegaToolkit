@@ -1,0 +1,16 @@
+# render.yaml
+services:
+  - type: web
+    name: stegatoolkit-backend
+    env: docker
+    plan: free
+    autoDeploy: true
+    dockerContext: .
+    dockerfilePath: backend/Dockerfile
+    buildFilter:
+      paths:
+        - backend/**
+    healthCheckPath: /docs
+    envVars:
+      - key: PORT
+        value: 8000
