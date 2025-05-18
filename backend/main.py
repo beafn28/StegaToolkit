@@ -31,6 +31,11 @@ app.add_middleware(
 
 HISTORIAL = []
 HISTORIAL_PATH = Path("historial.json")
+MAX_EVENTOS = 100
+MAX_DIM = (1024, 1024)
+
+# OCR reader (precargado una vez)
+reader = easyocr.Reader(['es', 'en'], gpu=False)
 
 def cargar_historial():
     global HISTORIAL
@@ -52,6 +57,8 @@ def registrar_evento(tipo, nombre_archivo, mensaje=None):
         "timestamp": datetime.datetime.now().isoformat(),
         "mensaje": mensaje[:50] + "..." if mensaje else None
     })
+    if len(HISTORIAL) > MAX_EVENTOS:
+        HISTORIAL.pop(0)
     guardar_historial()
 
 cargar_historial()
@@ -61,17 +68,17 @@ async def ocultar(imagen: UploadFile = File(...), mensaje: str = Form(...)):
     if imagen.content_type.split("/")[0] != "image":
         return JSONResponse(status_code=400, content={"error": "Archivo no válido, debe ser una imagen."})
 
-    contenido = await imagen.read()
+    buffer = BytesIO(await imagen.read())
     try:
-        img = Image.open(BytesIO(contenido)).convert("RGB")
+        img = Image.open(buffer).convert("RGB")
+        img.thumbnail(MAX_DIM)
         img_oculta = ocultar_mensaje_en_imagen(img, mensaje)
-        buffer = BytesIO()
-        img_oculta.save(buffer, format="PNG")
-        buffer.seek(0)
+        output = BytesIO()
+        img_oculta.save(output, format="PNG")
+        output.seek(0)
 
         registrar_evento("ocultación", imagen.filename, mensaje)
-
-        return StreamingResponse(buffer, media_type="image/png")
+        return StreamingResponse(output, media_type="image/png")
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Error procesando imagen: {str(e)}"})
 
@@ -80,13 +87,11 @@ async def extraer(imagen: UploadFile = File(...)):
     if imagen.content_type.split("/")[0] != "image":
         return JSONResponse(status_code=400, content={"error": "Archivo no válido, debe ser una imagen."})
 
-    contenido = await imagen.read()
+    buffer = BytesIO(await imagen.read())
     try:
-        img = Image.open(BytesIO(contenido)).convert("RGB")
+        img = Image.open(buffer).convert("RGB")
         mensaje = extraer_mensaje_de_imagen(img)
-
         registrar_evento("extracción", imagen.filename, mensaje)
-
         return {"mensaje": mensaje}
     except Exception:
         return JSONResponse(status_code=500, content={"error": "Error extrayendo mensaje de la imagen."})
@@ -97,8 +102,8 @@ async def analizar(imagen: UploadFile = File(...)):
         return JSONResponse(status_code=400, content={"error": "Archivo no válido, debe ser una imagen."})
 
     try:
-        contenido = await imagen.read()
-        img = Image.open(BytesIO(contenido)).convert("RGB")
+        buffer = BytesIO(await imagen.read())
+        img = Image.open(buffer).convert("RGB")
         mensaje = extraer_mensaje_de_imagen(img)
         return {"contiene_mensaje": mensaje.strip().startswith("STEG:")}
     except Exception:
@@ -131,30 +136,24 @@ async def ocr(imagen: UploadFile = File(...)):
         return JSONResponse(status_code=400, content={"error": "Archivo no válido, debe ser una imagen."})
 
     try:
-        contenido = await imagen.read()
-        img = Image.open(BytesIO(contenido)).convert("RGB")
+        buffer = BytesIO(await imagen.read())
+        img = Image.open(buffer).convert("RGB")
+        img.thumbnail(MAX_DIM)
         np_img = np.array(img)
 
-        reader = easyocr.Reader(['es', 'en'], gpu=False)
         resultados = reader.readtext(np_img, detail=0)
-
         texto = " ".join(resultados).strip()
 
         if not texto:
-            return JSONResponse(status_code=200, content={"texto": "", "idioma": "", "traduccion": ""})
+            return {"texto": "", "idioma": "", "traduccion": ""}
 
         idioma = detect(texto)
         idioma_nombre = {"es": "Español", "en": "Inglés"}.get(idioma, idioma)
-
         traduccion = GoogleTranslator(source='auto', target='es' if idioma != 'es' else 'en').translate(texto)
 
         registrar_evento("ocr", imagen.filename, texto)
 
-        return {
-            "texto": texto,
-            "idioma": idioma_nombre,
-            "traduccion": traduccion
-        }
+        return {"texto": texto, "idioma": idioma_nombre, "traduccion": traduccion}
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Error realizando OCR: {str(e)}"})
@@ -165,8 +164,9 @@ async def rgb_split(imagen: UploadFile = File(...)):
         return JSONResponse(status_code=400, content={"error": "Debe ser una imagen."})
 
     try:
-        contenido = await imagen.read()
-        img = Image.open(BytesIO(contenido)).convert("RGB")
+        buffer = BytesIO(await imagen.read())
+        img = Image.open(buffer).convert("RGB")
+        img.thumbnail(MAX_DIM)
         r, g, b = img.split()
 
         def canal_to_base64(canal):
@@ -196,9 +196,9 @@ async def analisis_forense(imagen: UploadFile = File(...)):
         return JSONResponse(status_code=400, content={"error": "Debe ser una imagen."})
 
     try:
-        contenido = await imagen.read()
-        buffer = BytesIO(contenido)
+        buffer = BytesIO(await imagen.read())
         img = Image.open(buffer)
+        img.thumbnail(MAX_DIM)
         exif = {}
         if hasattr(img, '_getexif') and img._getexif():
             exif_raw = img._getexif()
@@ -207,8 +207,8 @@ async def analisis_forense(imagen: UploadFile = File(...)):
                 for k, v in exif_raw.items() if k in ExifTags.TAGS
             }
 
-        md5 = hashlib.md5(contenido).hexdigest()
-        sha1 = hashlib.sha1(contenido).hexdigest()
+        md5 = hashlib.md5(buffer.getvalue()).hexdigest()
+        sha1 = hashlib.sha1(buffer.getvalue()).hexdigest()
 
         img_rgb = img.convert("RGB")
         mensaje = extraer_mensaje_de_imagen(img_rgb)
@@ -228,12 +228,13 @@ async def analisis_forense(imagen: UploadFile = File(...)):
 @app.post("/ela")
 async def ela(imagen: UploadFile = File(...)):
     try:
-        contenido = await imagen.read()
-        original = Image.open(BytesIO(contenido)).convert("RGB")
-        buffer = BytesIO()
-        original.save(buffer, format="JPEG", quality=90)
-        buffer.seek(0)
-        recompressed = Image.open(buffer)
+        buffer = BytesIO(await imagen.read())
+        original = Image.open(buffer).convert("RGB")
+        original.thumbnail(MAX_DIM)
+        buffer_jpeg = BytesIO()
+        original.save(buffer_jpeg, format="JPEG", quality=90)
+        buffer_jpeg.seek(0)
+        recompressed = Image.open(buffer_jpeg)
 
         ela_img = Image.new("RGB", original.size)
         for x in range(original.width):
