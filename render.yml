@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: stegatoolkit-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    buildCommand: docker-compose build
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    envVars:
+      - key: PORT
+        value: 8000
+
+  - type: web
+    name: stegatoolkit-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://stegatoolkit-backend.onrender.com  # cambia esto tras deploy

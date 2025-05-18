@@ -39,7 +39,7 @@
       </RouterLink>
 
 <RouterLink
-  to="/analisis-forense"
+  to="/analisis_forense"
   class="flex flex-col items-center justify-center p-6 rounded-lg shadow hover:shadow-lg transition bg-blue-100 hover:bg-blue-200 text-justify"
 >
   <h2 class="text-lg font-semibold text-blue-700 mb-2 text-center">Análisis Forense</h2>

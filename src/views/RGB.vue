@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 const archivo = ref(null)
 const preview = ref(null)
@@ -106,7 +106,7 @@ async function enviarImagen() {
   formData.append('imagen', archivo.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/rgb_split', formData)
+    const res = await api.post('/rgb_split', formData)
     canales.value = {
       rojo: 'data:image/png;base64,' + res.data.rojo,
       verde: 'data:image/png;base64,' + res.data.verde,

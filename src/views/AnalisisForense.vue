@@ -99,7 +99,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
+
 
 const archivo = ref(null)
 const preview = ref(null)
@@ -142,7 +143,7 @@ async function analizarImagen() {
   formData.append('imagen', archivo.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/analisis_forense', formData)
+    const res = await api.post('/analisis_forense', formData)
     resultado.value = res.data
     guardarEnHistorial({
       tipo: 'analisis_forense',
@@ -163,7 +164,7 @@ async function obtenerELA() {
   formData.append('imagen', archivo.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/ela', formData)
+    const res = await api.post('/ela', formData)
     elaBase64.value = res.data.ela
   } catch (err) {
     error.value = 'Error obteniendo ELA.'

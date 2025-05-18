@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 const nombre = ref('')
 const correo = ref('')
@@ -51,7 +51,7 @@ async function enviarMensaje() {
   form.append('mensaje', mensaje.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/contacto', form)
+    const res = await api.post('/contacto', form)
     confirmacion.value = res.data.message
     nombre.value = ''
     correo.value = ''

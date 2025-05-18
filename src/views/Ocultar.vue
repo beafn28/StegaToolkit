@@ -90,7 +90,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 const imagenOriginal = ref(null)
 const preview = ref(null)
@@ -152,7 +152,7 @@ async function ocultarTexto() {
   form.append('mensaje', mensaje.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/ocultar', form, { responseType: 'blob' })
+    const res = await api.post('/ocultar', form, { responseType: 'blob' })
     imagenOculta.value = URL.createObjectURL(res.data)
 
     const fecha = new Date().toISOString()
@@ -183,7 +183,7 @@ async function analizarImagen() {
   form.append('imagen', imagenOriginal.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/analizar', form)
+    const res = await api.post('/analizar', form)
     resultadoAnalisis.value = res.data.contiene_mensaje
   } catch (err) {
     console.error('Error analizando imagen:', err)

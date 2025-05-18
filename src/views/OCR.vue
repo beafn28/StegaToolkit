@@ -80,7 +80,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 const imagenParaOCR = ref(null)
 const preview = ref(null)
@@ -130,7 +130,7 @@ async function realizarOCR() {
   form.append('imagen', imagenParaOCR.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/ocr', form)
+    const res = await api.post('/ocr', form)
     resultadoOCR.value = res.data.texto || ''
     idiomaDetectado.value = res.data.idioma || ''
     traduccion.value = res.data.traduccion || ''

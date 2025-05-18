@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 const imagenParaExtraer = ref(null)
 const preview = ref(null)
@@ -112,7 +112,7 @@ async function analizarImagen() {
   form.append('imagen', imagenParaExtraer.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/analizar', form)
+    const res = await api.post('/analizar', form)
     resultadoAnalisis.value = res.data.contiene_mensaje
   } catch (err) {
     console.error('Error analizando imagen:', err)
@@ -131,7 +131,7 @@ async function extraerTexto() {
   form.append('imagen', imagenParaExtraer.value)
 
   try {
-    const res = await axios.post('http://localhost:8000/extraer', form)
+    const res = await api.post('/extraer', form)
     mensajeExtraido.value = res.data.mensaje || ''
     guardarEnHistorial({
       tipo: 'extracción',
