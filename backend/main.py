@@ -249,3 +249,7 @@ async def ela(imagen: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Error generando ELA: {str(e)}"})
+
+@app.get("/")
+def read_root():
+    return {"mensaje": "¡Backend de StegaToolkit funcionando en Render!"}
