@@ -22,7 +22,7 @@ https://stegatoolkit.onrender.com
 | Analizador forense      | Revisa metadatos EXIF, hashes MD5/SHA1, RGB y más |
 | Análisis ELA            | Detecta manipulaciones en la imagen |
 | Split RGB               | Visualiza los canales R, G y B por separado |
-| Contacto | Recibo vuestra inquietudes en Telegram |
+| Contacto | Recibo vuestras inquietudes en Telegram |
 
 ---
 
@@ -30,7 +30,7 @@ https://stegatoolkit.onrender.com
 
 - **Frontend**: Vue 3, Vite, Tailwind CSS
 - **Backend**: FastAPI (Python), Tesseract-OCR, Pillow, Poppler-utils
-- **Despliegue**: Render.com y Fly.com
+- **Despliegue**: Render.com (Frontend) y Fly.io (Backend) 
 - **Extras**: Docker, .env, API Telegram, localStorage
 
 ---
