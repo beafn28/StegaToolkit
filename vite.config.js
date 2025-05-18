@@ -5,13 +5,41 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     proxy: {
-      '/ocr': 'http://localhost:8000',
-      '/ocultar': 'http://localhost:8000',
-      '/extraer': 'http://localhost:8000',
-      '/historial': 'http://localhost:8000',
-      '/rgb_split': 'http://localhost:8000',
-      '/ela': 'http://localhost:8000',
-      '/analisis_forense': 'http://localhost:8000',
+      '/api/ocr': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/ocultar': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/extraer': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/historial': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/rgb_split': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/ela': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      },
+      '/api/analisis_forense': {
+        target: 'https://stegatoolkit-backend.onrender.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
     }
   }
 })
