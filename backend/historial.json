@@ -1,0 +1,56 @@
+[
+  {
+    "tipo": "analisis_forense",
+    "archivo": "imagen_con_texto (1).png",
+    "timestamp": "2025-05-18T10:40:25.291584",
+    "mensaje": "HOLA QUE TAL..."
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "104277804.jpeg",
+    "timestamp": "2025-05-18T10:40:59.518604",
+    "mensaje": "��������������������������������������������������..."
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "104277804.jpeg",
+    "timestamp": "2025-05-18T10:41:03.782446",
+    "mensaje": "��������������������������������������������������..."
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "oso.jpg",
+    "timestamp": "2025-05-18T10:41:17.288211",
+    "mensaje": "��������������������������������������������������..."
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "titulo.png",
+    "timestamp": "2025-05-18T10:48:29.792483",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-18T10:49:46.908248",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "imagen_con_texto (1).png",
+    "timestamp": "2025-05-18T10:49:53.460325",
+    "mensaje": null
+  },
+  {
+    "tipo": "ocultación",
+    "archivo": "oso.jpg",
+    "timestamp": "2025-05-18T10:50:49.459446",
+    "mensaje": "hola..."
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "imagen_con_texto (2).png",
+    "timestamp": "2025-05-18T10:50:59.309553",
+    "mensaje": "hola..."
+  }
+]

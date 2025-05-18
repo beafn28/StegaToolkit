@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+pillow
+python-dotenv
+requests
+datetime
+pytesseract
+langdetect
+deep-translator
+easyocr

@@ -1,0 +1,34 @@
+# Node
+node_modules/
+dist/
+.vite/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Byte-compiled / logs / virtualenvs
+*.log
+*.pot
+*.mo
+*.egg-info/
+.venv/
+venv/
+.env
+
+# VSCode / JetBrains / MacOS
+.vscode/
+.idea/
+.DS_Store
+
+# Docker artifacts
+*.pid
+*.sock
+
+# Historial en backend (si no quieres versionarlo)
+backend/historial
