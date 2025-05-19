@@ -24,11 +24,15 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://stegatoolkit.onrender.com"],
+    allow_origins=[
+        "http://localhost:5173",  # Vite frontend local
+        "http://127.0.0.1:5173"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
 
 HISTORIAL = []
 HISTORIAL_PATH = Path("historial.json")
@@ -254,4 +258,4 @@ async def ela(imagen: UploadFile = File(...)):
 
 @app.get("/")
 def read_root():
-    return {"mensaje": "¡Backend de StegaToolkit funcionando en Render!"}
+    return {"mensaje": "¡Backend de StegaToolkit funcionando en LOCAL!"}

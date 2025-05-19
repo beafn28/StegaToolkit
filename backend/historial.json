@@ -52,5 +52,35 @@
     "archivo": "imagen_con_texto (2).png",
     "timestamp": "2025-05-18T10:50:59.309553",
     "mensaje": "hola..."
+  },
+  {
+    "tipo": "ocultación",
+    "archivo": "images.jpeg",
+    "timestamp": "2025-05-19T10:06:58.264774",
+    "mensaje": "hola..."
+  },
+  {
+    "tipo": "extracción",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-19T10:07:16.326653",
+    "mensaje": "hola..."
+  },
+  {
+    "tipo": "ocr",
+    "archivo": "titulo.jpg",
+    "timestamp": "2025-05-19T10:07:54.746327",
+    "mensaje": "Título..."
+  },
+  {
+    "tipo": "rgb_split",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-19T10:08:05.871843",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "images.jpeg",
+    "timestamp": "2025-05-19T10:08:14.959489",
+    "mensaje": null
   }
 ]
