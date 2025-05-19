@@ -19,6 +19,13 @@ Ideal para **pentesters**, **investigadores forenses** y entusiastas de la ciber
 | Contacto                | Recibo vuestras inquietudes en Telegram |
 
 ---
+# Mi Proyecto
+
+Aquí un GIF demostrativo del funcionamiento:
+
+![Funcionamiento](funcionamiento.gif)
+
+---
 
 ## Tecnologías utilizadas
 
