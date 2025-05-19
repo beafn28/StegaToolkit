@@ -82,5 +82,71 @@
     "archivo": "images.jpeg",
     "timestamp": "2025-05-19T10:08:14.959489",
     "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "a_quien_no_le_va_a_gustar.jpg",
+    "timestamp": "2025-05-19T11:17:44.483154",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "secret_tower.jpg",
+    "timestamp": "2025-05-19T11:23:13.683237",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "a_quien_no_le_va_a_gustar.jpg",
+    "timestamp": "2025-05-19T11:25:10.713311",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "salida_final.png",
+    "timestamp": "2025-05-19T11:26:29.695039",
+    "mensaje": null
+  },
+  {
+    "tipo": "extracción",
+    "archivo": "a_quien_no_le_va_a_gustar.jpg",
+    "timestamp": "2025-05-19T11:35:02.098645",
+    "mensaje": null
+  },
+  {
+    "tipo": "extracción",
+    "archivo": "color-fondo-imagen-r.png",
+    "timestamp": "2025-05-19T21:24:06.515051",
+    "mensaje": null
+  },
+  {
+    "tipo": "ocultación",
+    "archivo": "color-fondo-imagen-r.png",
+    "timestamp": "2025-05-19T21:24:23.094344",
+    "mensaje": "hola como estamos..."
+  },
+  {
+    "tipo": "extracción",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-19T21:24:36.760634",
+    "mensaje": "hola como estamos..."
+  },
+  {
+    "tipo": "ocr",
+    "archivo": "titulo.jpg",
+    "timestamp": "2025-05-19T21:25:03.592140",
+    "mensaje": "Título..."
+  },
+  {
+    "tipo": "rgb_split",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-19T21:25:27.716321",
+    "mensaje": null
+  },
+  {
+    "tipo": "analisis_forense",
+    "archivo": "imagen_con_texto.png",
+    "timestamp": "2025-05-19T21:25:39.775572",
+    "mensaje": "hola como estamos..."
   }
 ]
