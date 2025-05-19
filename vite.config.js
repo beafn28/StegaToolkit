@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://backend-falling-breeze-4140.fly.dev',
+        target: 'http://localhost:8080', // backend local
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       }
